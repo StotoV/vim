@@ -1,3 +1,4 @@
+set guiheadroom=0
 set nocompatible
 syntax on
 set nowrap
@@ -243,8 +244,8 @@ map <C-n> :NERDTreeToggle<CR>
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Disable arrow movement, resize splits instead.
-nnoremap <Left> :bp<CR>
-nnoremap <Right> :bn<CR>
+nnoremap <Left> :tabprevious<CR>
+nnoremap <Right> :tabnext<CR>
 nnoremap <Up>    :resize +2<CR>
 nnoremap <Down>  :resize -2<CR>
 nnoremap <S-Left>  :vertical resize +2<CR>
