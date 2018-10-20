@@ -38,6 +38,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'mattn/emmet-vim'
 Plug 'valloric/youcompleteme'
 Plug 'craigemery/vim-autotag'
+Plug 'uncrustify/uncrustify'
 
 " Markdown / Writting
 Plug 'reedes/vim-pencil'
@@ -167,6 +168,10 @@ let g:ale_lint_on_save = 1
 let g:ale_lint_on_enter = 1
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
+let g:ale_fixers = ['uncrustify']
+
+" YouCompleteMe
+set completeopt-=preview
 
 " You might also want to look at the echodoc plugin.
 set previewheight=5
