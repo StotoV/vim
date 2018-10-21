@@ -6,6 +6,7 @@ set encoding=utf8
 set conceallevel=3
 set clipboard=unnamed
 set updatetime=100
+set autochdir
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')
     call webdevicons#refresh()
