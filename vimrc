@@ -23,6 +23,7 @@ call plug#begin('~/.vim/plugged')
 
 " Utility
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ervandew/supertab'
 Plug 'tpope/vim-dispatch'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -32,6 +33,7 @@ Plug 'tpope/vim-eunuch'
 " Generic Programming Support
 Plug 'maksimr/vim-jsbeautify'
 Plug 'w0rp/ale'
+Plug 'romainl/vim-qf'                                               " Managing quickfix windows (for instance ale error windows)
 Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-surround'
@@ -127,6 +129,20 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
+" Nerdtree git symbols
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
+
 " unicode symbols
 let g:airline_left_sep = '»'
 let g:airline_left_sep = '▶'
@@ -170,6 +186,9 @@ let g:ale_lint_on_enter = 1
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
 let g:ale_fixers = ['uncrustify']
+
+" Vim-qf settings
+let g:qf_loclist_window_bottom=0
 
 " YouCompleteMe
 set completeopt-=preview
@@ -241,6 +260,38 @@ let g:php_namespace_sort_after_insert = 1
 set tags+=tags
 let g:autotagTagsFile=".tags"
 
+" Making swapping windows easy
+function! SwapWindowBuffers()
+    exe ':windo if &buftype != "quickfix" | lclose | endif'
+    if !exists("g:markedWinNum")
+        " set window marked for swap
+        let g:markedWinNum = winnr()
+        :echo "window marked for swap"
+    else
+        " mark destination
+        let curNum = winnr()
+        let curBuf = bufnr( "%" )
+        if g:markedWinNum == curNum
+            :echo "window unmarked for swap"
+        else
+            exe g:markedWinNum . "wincmd w"
+            " switch to source and shuffle dest->source
+            let markedBuf = bufnr( "%" )
+            " hide and open so that we aren't prompted and keep history
+            exe 'hide buf' curBuf
+            " switch to dest and shuffle source->dest
+            exe curNum . "wincmd w"
+            " hide and open so that we aren't prompted and keep history
+            exe 'hide buf' markedBuf
+            :echo "windows swapped"
+        endif
+        " unset window marked for swap
+        unlet g:markedWinNum
+    endif
+endfunction
+
+nmap <silent> <leader>mw :call SwapWindowBuffers()<CR>
+
 """""""""""""""""""""""""""""""""""""
 " Mappings configurationn
 """""""""""""""""""""""""""""""""""""
@@ -273,6 +324,6 @@ nmap [h <Plug>GitGutterPrevHunk
 
 " Map auto closing brackets on enter
 inoremap {      {}<Left>
-inoremap {<CR>  {<CR>}<Esc>O
+inoremap {<CR>  {<CR>}<Esc>
 inoremap {{     {
 inoremap {}     {}
