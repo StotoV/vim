@@ -7,6 +7,7 @@ set encoding=utf8
 
 " Basic options
 syntax on
+set relativenumber
 set number
 set ruler
 set cursorline
@@ -27,10 +28,22 @@ set guiheadroom=0
 set clipboard=unnamed
 
 " Some other settings
-set nowrap
+" set nowrap
 set updatetime=1000
 set autochdir
 set previewheight=5
+set virtualedit=all
+set scrolloff=999
+set spell spelllang=en_us
+
+" Set wrapfile directory
+set bdir-=.
+set bdir+=/tmp
+set dir-=.
+set dir+=/tmp
+
+" case insensitive search YEAY
+set ic
 
 " Set the tags
 set tags+=tags
