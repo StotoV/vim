@@ -34,7 +34,6 @@ set autochdir
 set previewheight=5
 set virtualedit=all
 set scrolloff=999
-set spell spelllang=en_us
 
 " Set wrapfile directory
 set bdir-=.
@@ -239,3 +238,9 @@ inoremap {      {}<Left>
 inoremap {<CR>  {<CR>}<Esc>
 inoremap {{     {
 inoremap {}     {}
+
+" Navigate the display lines instead of the physical lines
+noremap  <buffer> <silent> k gk
+noremap  <buffer> <silent> j gj
+noremap  <buffer> <silent> 0 g0
+noremap  <buffer> <silent> $ g$
