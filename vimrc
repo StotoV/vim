@@ -70,6 +70,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-eunuch'
+Plug 'christoomey/vim-tmux-navigator'                               " TMux controls integrated in VIM
 
 " Generic Programming Support
 Plug 'w0rp/ale'
@@ -102,6 +103,12 @@ Plug 'ryanoasis/vim-devicons'
 
 " C# Support
 Plug 'OmniSharp/omnisharp-vim'
+
+" Typescript Support
+Plug 'leafgarland/typescript-vim'
+
+" Markdown support
+Plug 'JamshedVesuna/vim-markdown-preview'
 
 " OSX stupid backspace fix
 set backspace=indent,eol,start
@@ -208,6 +215,10 @@ set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline\ Nerd\ Font\ Complete:h12
     nmap ]h <Plug>GitGutterNextHunk
     nmap [h <Plug>GitGutterPrevHunk
 " END VIM-GITGUTTER
+
+" START VIM-MARKDOWN-PREVIEW
+let vim_markdown_preview_github = 1
+" END VIM-MARKDOWN-PREVIEW                                                                                                                                                                          
 
 """""""""""""""""""""""""""""""""""""
 " Mappings configuration
