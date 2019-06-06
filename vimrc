@@ -43,9 +43,11 @@ set dir+=/tmp
 
 " case insensitive search YEAY
 set ic
+set hlsearch
 
 " Set the tags
-set tags+=tags
+" set tags+=tags
+set tags=tags;/
 let g:autotagTagsFile=".tags"
 
 " Theme and Styling 
@@ -71,6 +73,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-eunuch'
 Plug 'christoomey/vim-tmux-navigator'                               " TMux controls integrated in VIM
+Plug 'tmux-plugins/vim-tmux-focus-events'                           " TMux focus events
 
 " Generic Programming Support
 Plug 'w0rp/ale'
@@ -158,6 +161,9 @@ set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline\ Nerd\ Font\ Complete:h12
     let g:airline_theme='deus'
     let g:hybrid_custom_term_colors = 1
     let g:hybrid_reduced_contrast = 1
+
+    let g:airline#extensions#tabline#enabled = 0
+    let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 " END VIM_AIRLINE
 
 " NERDTREE
@@ -176,6 +182,9 @@ set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline\ Nerd\ Font\ Complete:h12
         \ }
 " END NERDTREE
 
+" START GUTENTAGS
+    set statusline+=%{gutentags#statusline()}
+" END GUTENTAGS
 
 " ALE
     " Add keystrokes for Ale
@@ -220,6 +229,19 @@ set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline\ Nerd\ Font\ Complete:h12
 let vim_markdown_preview_github = 1
 " END VIM-MARKDOWN-PREVIEW                                                                                                                                                                          
 
+" START VIM-TMUX-NAVIGATOR
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <C-p> :TmuxNavigatePrevious<cr>
+
+let g:tmux_navigator_save_on_switch = 2
+let g:tmux_navigator_disable_when_zoomed = 1
+" END VIM-TMUX-NAVIGATOR
+
 """""""""""""""""""""""""""""""""""""
 " Mappings configuration
 """""""""""""""""""""""""""""""""""""
@@ -227,12 +249,12 @@ let vim_markdown_preview_github = 1
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Make moving around windows and tabs easier
-nnoremap <S-h> :wincmd h<CR>
-nnoremap <S-l> :wincmd l<CR>
-nnoremap <S-k> :wincmd k<CR>
-nnoremap <S-j> :wincmd j<CR>
-nnoremap <C-h> :tabprevious<CR>
-nnoremap <C-l> :tabnext<CR>
+" nnoremap <S-h> :wincmd h<CR>
+" nnoremap <S-l> :wincmd l<CR>
+" nnoremap <S-k> :wincmd k<CR>
+" nnoremap <S-j> :wincmd j<CR>
+nnoremap <S-h> :tabprevious<CR>
+nnoremap <S-l> :tabnext<CR>
 
 " Disable arrow movement, resize splits instead.
 nnoremap <Up>    :resize +2<CR>
