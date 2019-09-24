@@ -3,6 +3,7 @@
 """""""""""""""""""""""""""""""""""""
 " Some definitions
 set nocompatible
+set noshowmode
 set encoding=utf8
 
 " Basic options
@@ -100,8 +101,9 @@ Plug 'arnaud-lb/vim-php-namespace'                                  " Auto inser
 
 " Theme / Interface
 Plug 'ajh17/Spacegray.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 Plug 'ryanoasis/vim-devicons'
 
 " C# Support
@@ -112,6 +114,9 @@ Plug 'leafgarland/typescript-vim'
 
 " Markdown support
 Plug 'JamshedVesuna/vim-markdown-preview'
+
+" LaTeX support
+Plug 'lervag/vimtex'
 
 " OSX stupid backspace fix
 set backspace=indent,eol,start
@@ -127,44 +132,62 @@ call plug#end()
 colorscheme spacegray
 set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline\ Nerd\ Font\ Complete:h12
 
-" VIM-AIRLINE
-    if !exists('g:airline_symbols')
-        let g:airline_symbols = {}
-    endif
+" VIMTEX
+    let g:tex_flavor = 'latex'
+    let g:vimtex_view_method = 'skim'
+" END VIMTEX
 
-    " unicode symbols
-    let g:airline_left_sep = '»'
-    let g:airline_left_sep = '▶'
-    let g:airline_right_sep = '«'
-    let g:airline_right_sep = '◀'
-    let g:airline_symbols.linenr = '␊'
-    let g:airline_symbols.linenr = '␤'
-    let g:airline_symbols.linenr = '¶'
-    let g:airline_symbols.branch = '⎇'
-    let g:airline_symbols.paste = 'ρ'
-    let g:airline_symbols.paste = 'Þ'
-    let g:airline_symbols.paste = '∥'
-    let g:airline_symbols.whitespace = 'Ξ'
+" LIGHTLINE
+    let g:lightline = {
+        \ 'colorscheme': 'jellybeans',
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ],
+        \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+        \ },
+        \ 'component_function': {
+        \   'gitbranch': 'fugitive#head'
+        \ }
+    \ }
+" END LIGHTLINE
 
-    " airline symbols
-    let g:airline_left_sep = ''
-    let g:airline_left_alt_sep = ''
-    let g:airline_right_sep = ''
-    let g:airline_right_alt_sep = ''
-    let g:airline_symbols.branch = ''
-    let g:airline_symbols.readonly = ''
-    let g:airline_symbols.linenr = ''
-
-    let g:airline#extensions#ale#enabled = 1
-    let g:airline_powerline_fonts = 1
-    let g:webdevicons_enable_airline_statusline = 1
-    let g:airline_theme='deus'
-    let g:hybrid_custom_term_colors = 1
-    let g:hybrid_reduced_contrast = 1
-
-    let g:airline#extensions#tabline#enabled = 0
-    let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-" END VIM_AIRLINE
+" " VIM-AIRLINE
+"     if !exists('g:airline_symbols')
+"         let g:airline_symbols = {}
+"     endif
+"
+"     " unicode symbols
+"     let g:airline_left_sep = '»'
+"     let g:airline_left_sep = '▶'
+"     let g:airline_right_sep = '«'
+"     let g:airline_right_sep = '◀'
+"     let g:airline_symbols.linenr = '␊'
+"     let g:airline_symbols.linenr = '␤'
+"     let g:airline_symbols.linenr = '¶'
+"     let g:airline_symbols.branch = '⎇'
+"     let g:airline_symbols.paste = 'ρ'
+"     let g:airline_symbols.paste = 'Þ'
+"     let g:airline_symbols.paste = '∥'
+"     let g:airline_symbols.whitespace = 'Ξ'
+"
+"     " airline symbols
+"     let g:airline_left_sep = ''
+"     let g:airline_left_alt_sep = ''
+"     let g:airline_right_sep = ''
+"     let g:airline_right_alt_sep = ''
+"     let g:airline_symbols.branch = ''
+"     let g:airline_symbols.readonly = ''
+"     let g:airline_symbols.linenr = ''
+"
+"     let g:airline#extensions#ale#enabled = 1
+"     let g:airline_powerline_fonts = 1
+"     let g:webdevicons_enable_airline_statusline = 1
+"     let g:airline_theme='deus'
+"     let g:hybrid_custom_term_colors = 1
+"     let g:hybrid_reduced_contrast = 1
+"
+"     let g:airline#extensions#tabline#enabled = 0
+"     let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+" " END VIM_AIRLINE
 
 " NERDTREE
     map <C-n> :NERDTreeToggle<CR>
@@ -221,8 +244,11 @@ set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline\ Nerd\ Font\ Complete:h12
 
 " VIM-GITGUTTER
     " Change hunks
-    nmap ]h <Plug>GitGutterNextHunk
-    nmap [h <Plug>GitGutterPrevHunk
+    nmap ]h <Plug>(GitGutterNextHunk)
+    nmap [h <Plug>(GitGutterPrevHunk)
+    nmap [uh <Plug>(GitGutterUndoHunk)
+    nmap [lh <Plug>(GitGutterLineHighlightsToggle)
+    nmap [ht <Plug>(GitGutterToggle)
 " END VIM-GITGUTTER
 
 " START VIM-MARKDOWN-PREVIEW
@@ -266,14 +292,8 @@ nnoremap <Right> :vertical resize -2<CR>
 map § <Esc>
 imap § <Esc>
 
-" Map auto closing brackets on enter
-inoremap {      {}<Left>
-inoremap {<CR>  {<CR>}<Esc>
-inoremap {{     {
-inoremap {}     {}
-
 " Navigate the display lines instead of the physical lines
-noremap  <buffer> <silent> k gk
-noremap  <buffer> <silent> j gj
-noremap  <buffer> <silent> 0 g0
-noremap  <buffer> <silent> $ g$
+noremap  <silent> k gk
+noremap  <silent> j gj
+" noremap  <silent> 0 g0
+" noremap  <silent> $ g$
