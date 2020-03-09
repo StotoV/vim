@@ -33,7 +33,7 @@ set clipboard=unnamed
 set updatetime=1000
 set autochdir
 set previewheight=5
-set virtualedit=all
+" set virtualedit=all
 set scrolloff=999
 
 " Set wrapfile directory
@@ -44,7 +44,7 @@ set dir+=/tmp
 
 " case insensitive search YEAY
 set ic
-set hlsearch
+" set hlsearch
 
 " Set the tags
 " set tags+=tags
@@ -56,8 +56,11 @@ set t_Co=256
 set background=dark
 let base16colorspace=256  " Access colors present in 256 colorspace
 
+" Spelling
+set spell spelllang=en_gb,nl
+
 " Set all the filetype settings local
-filetype plugin on
+filetype plugin indent on
 
 """""""""""""""""""""""""""""""""""""
 " VIM-plug configuration
@@ -66,45 +69,28 @@ filetype plugin on
 call plug#begin('~/.vim/plugged')
 
 " Utility
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'ervandew/supertab'
-Plug 'tpope/vim-dispatch'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-eunuch'
 Plug 'christoomey/vim-tmux-navigator'                               " TMux controls integrated in VIM
 Plug 'tmux-plugins/vim-tmux-focus-events'                           " TMux focus events
 
+" Theme / Interface
+Plug 'ajh17/Spacegray.vim'
+Plug 'itchyny/lightline.vim'
+
 " Generic Programming Support
-Plug 'w0rp/ale'
+Plug 'w0rp/ale'                                                     " Linter
 Plug 'romainl/vim-qf'                                               " Managing quickfix windows (for instance ale error windows)
-Plug 'tomtom/tcomment_vim'
-Plug 'godlygeek/tabular'
-Plug 'tpope/vim-surround'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'mattn/emmet-vim'
-Plug 'valloric/youcompleteme'
+Plug 'tomtom/tcomment_vim'                                          " Comment whole blocks of code
+Plug 'valloric/youcompleteme'                                       " Auto completion
 Plug 'ludovicchabant/vim-gutentags'                                 " Automatically create tags file and keep it up to date
-Plug 'uncrustify/uncrustify'
-Plug 'shougo/echodoc'                                               " Displays method signature in command line bottom screen
+Plug 'Yggdroot/indentLine'                                          " Indention vertical lines
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }   " Fuzzy find support, installed with brew
 
 " Git Support
-Plug 'kablamo/vim-git-log'
-Plug 'gregsexton/gitv'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'                                       " Git changes in numbers line
 
 " PHP Support
 Plug 'tobyS/pdv'                                                    " Generate PHPDocs
 Plug 'arnaud-lb/vim-php-namespace'                                  " Auto insert using statements and sort them
-
-" Theme / Interface
-Plug 'ajh17/Spacegray.vim'
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-Plug 'itchyny/lightline.vim'
-Plug 'ryanoasis/vim-devicons'
 
 " C# Support
 Plug 'OmniSharp/omnisharp-vim'
@@ -132,11 +118,6 @@ call plug#end()
 colorscheme spacegray
 set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline\ Nerd\ Font\ Complete:h12
 
-" VIMTEX
-    let g:tex_flavor = 'latex'
-    let g:vimtex_view_method = 'skim'
-" END VIMTEX
-
 " LIGHTLINE
     let g:lightline = {
         \ 'colorscheme': 'jellybeans',
@@ -149,61 +130,6 @@ set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline\ Nerd\ Font\ Complete:h12
         \ }
     \ }
 " END LIGHTLINE
-
-" " VIM-AIRLINE
-"     if !exists('g:airline_symbols')
-"         let g:airline_symbols = {}
-"     endif
-"
-"     " unicode symbols
-"     let g:airline_left_sep = '»'
-"     let g:airline_left_sep = '▶'
-"     let g:airline_right_sep = '«'
-"     let g:airline_right_sep = '◀'
-"     let g:airline_symbols.linenr = '␊'
-"     let g:airline_symbols.linenr = '␤'
-"     let g:airline_symbols.linenr = '¶'
-"     let g:airline_symbols.branch = '⎇'
-"     let g:airline_symbols.paste = 'ρ'
-"     let g:airline_symbols.paste = 'Þ'
-"     let g:airline_symbols.paste = '∥'
-"     let g:airline_symbols.whitespace = 'Ξ'
-"
-"     " airline symbols
-"     let g:airline_left_sep = ''
-"     let g:airline_left_alt_sep = ''
-"     let g:airline_right_sep = ''
-"     let g:airline_right_alt_sep = ''
-"     let g:airline_symbols.branch = ''
-"     let g:airline_symbols.readonly = ''
-"     let g:airline_symbols.linenr = ''
-"
-"     let g:airline#extensions#ale#enabled = 1
-"     let g:airline_powerline_fonts = 1
-"     let g:webdevicons_enable_airline_statusline = 1
-"     let g:airline_theme='deus'
-"     let g:hybrid_custom_term_colors = 1
-"     let g:hybrid_reduced_contrast = 1
-"
-"     let g:airline#extensions#tabline#enabled = 0
-"     let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-" " END VIM_AIRLINE
-
-" NERDTREE
-    map <C-n> :NERDTreeToggle<CR>
-    let g:NERDTreeIndicatorMapCustom = {
-        \ "Modified"  : "✹",
-        \ "Staged"    : "✚",
-        \ "Untracked" : "✭",
-        \ "Renamed"   : "➜",
-        \ "Unmerged"  : "═",
-        \ "Deleted"   : "✖",
-        \ "Dirty"     : "✗",
-        \ "Clean"     : "✔︎",
-        \ 'Ignored'   : '☒',
-        \ "Unknown"   : "?"
-        \ }
-" END NERDTREE
 
 " START GUTENTAGS
     set statusline+=%{gutentags#statusline()}
@@ -237,12 +163,17 @@ set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline\ Nerd\ Font\ Complete:h12
     set completeopt-=preview
 " END YOUCOMPLETEME
 
-" ECHODOC
-    " This plugin needs the command line to be visible
-    set cmdheight=2
-" END ECHODOC
+" VIM-GITGUTTER .
+    highlight GitGutterAdd    guifg=#009900 guibg=#000000 ctermfg=2
+    highlight GitGutterChange guifg=#bbbb00 guibg=#000000 ctermfg=3
+    highlight GitGutterDelete guifg=#ff2222 guibg=#000000 ctermfg=1
 
-" VIM-GITGUTTER
+    let g:gitgutter_sign_added = '++'
+    let g:gitgutter_sign_modified = '~~'
+    let g:gitgutter_sign_removed = '**'
+    let g:gitgutter_sign_removed_first_line = '^^'
+    let g:gitgutter_sign_modified_removed = 'ww'
+
     " Change hunks
     nmap ]h <Plug>(GitGutterNextHunk)
     nmap [h <Plug>(GitGutterPrevHunk)
@@ -250,10 +181,6 @@ set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline\ Nerd\ Font\ Complete:h12
     nmap [lh <Plug>(GitGutterLineHighlightsToggle)
     nmap [ht <Plug>(GitGutterToggle)
 " END VIM-GITGUTTER
-
-" START VIM-MARKDOWN-PREVIEW
-let vim_markdown_preview_github = 1
-" END VIM-MARKDOWN-PREVIEW                                                                                                                                                                          
 
 " START VIM-TMUX-NAVIGATOR
 let g:tmux_navigator_no_mappings = 1
@@ -267,6 +194,15 @@ nnoremap <silent> <C-p> :TmuxNavigatePrevious<cr>
 let g:tmux_navigator_save_on_switch = 2
 let g:tmux_navigator_disable_when_zoomed = 1
 " END VIM-TMUX-NAVIGATOR
+
+" START INDENTLINE
+let g:indentLine_enabled = 1
+" END INDENTLINE
+
+" START FZF
+nnoremap <silent><leader>o :FZF<CR>
+nnoremap <silent><leader>O :FZF~<CR>
+" END FZF
 
 """""""""""""""""""""""""""""""""""""
 " Mappings configuration
@@ -295,5 +231,7 @@ imap § <Esc>
 " Navigate the display lines instead of the physical lines
 noremap  <silent> k gk
 noremap  <silent> j gj
-" noremap  <silent> 0 g0
-" noremap  <silent> $ g$
+noremap  <silent> 0 g0
+noremap  <silent> $ g$
+noremap  <silent> g0 0
+noremap  <silent> g$ $

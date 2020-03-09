@@ -1,5 +1,8 @@
 " PHP specific settings
 """""""""""""""""""""""""""""""""""""
+set nospell
+set foldmethod=indent
+set nofoldenable
 
 """""""""""""""""""""""""""""""""""""
 " Mappings configuration

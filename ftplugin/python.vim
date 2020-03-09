@@ -1,5 +1,6 @@
 " Python specific settings
 """""""""""""""""""""""""""""""""""""
+set nospell
 
 """""""""""""""""""""""""""""""""""""
 " Mappings configuration
