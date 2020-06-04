@@ -1,4 +1,4 @@
-"""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""
 " Configuration Section
 """""""""""""""""""""""""""""""""""""
 " Some definitions
@@ -12,6 +12,7 @@ set relativenumber
 set number
 set ruler
 set cursorline
+set conceallevel=0
 
 " Set Proper Tabs
 set tabstop=4
@@ -53,7 +54,6 @@ let g:autotagTagsFile=".tags"
 
 " Theme and Styling 
 set t_Co=256
-set background=dark
 let base16colorspace=256  " Access colors present in 256 colorspace
 
 " Spelling
@@ -73,8 +73,9 @@ Plug 'christoomey/vim-tmux-navigator'                               " TMux contr
 Plug 'tmux-plugins/vim-tmux-focus-events'                           " TMux focus events
 
 " Theme / Interface
-Plug 'ajh17/Spacegray.vim'
-Plug 'itchyny/lightline.vim'
+Plug 'ajh17/Spacegray.vim'                                          " Dark color theme
+Plug 'NLKNguyen/papercolor-theme'                                   " Light color theme
+Plug 'itchyny/lightline.vim'                                        " Statusbar
 
 " Generic Programming Support
 Plug 'w0rp/ale'                                                     " Linter
@@ -84,6 +85,7 @@ Plug 'valloric/youcompleteme'                                       " Auto compl
 Plug 'ludovicchabant/vim-gutentags'                                 " Automatically create tags file and keep it up to date
 Plug 'Yggdroot/indentLine'                                          " Indention vertical lines
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }   " Fuzzy find support, installed with brew
+Plug 'vim-vdebug/vdebug'                                            " General debugger
 
 " Git Support
 Plug 'airblade/vim-gitgutter'                                       " Git changes in numbers line
@@ -114,22 +116,33 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""
 " Plugin configuration
 """""""""""""""""""""""""""""""""""""
-" Styling
-colorscheme spacegray
-set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline\ Nerd\ Font\ Complete:h12
+" STYLING "
+set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline\ Nerd\ Font\ Complete:h13
+
+" Dark
+" set background=dark
+" colorscheme spacegray
+
+" Light
+set background=light
+colorscheme PaperColor
+" END STYLING "
 
 " LIGHTLINE
-    let g:lightline = {
-        \ 'colorscheme': 'jellybeans',
-        \ 'active': {
-        \   'left': [ [ 'mode', 'paste' ],
-        \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-        \ },
-        \ 'component_function': {
-        \   'gitbranch': 'fugitive#head'
-        \ }
-    \ }
+let g:lightline = {
+      \ 'colorscheme': 'one',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'modified' ],
+      \             [ 'readonly', 'filename', 'modified' ] ]
+      \ }
+\ }
 " END LIGHTLINE
+
+
+" VDEBUG
+    let g:vdebug_options = {'debug_window_level' : 1}
+    nmap <silent> <leader>bp :BreakpointWindow<CR>
+" END VDEBUG
 
 " START GUTENTAGS
     set statusline+=%{gutentags#statusline()}
