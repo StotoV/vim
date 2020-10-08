@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =3
+let g:netrw_dirhist_3='/Users/tomstock/Documents/Stock-IT/Projecten/iSee iKnow/isik_app/classes/validator/validators/presets'
+let g:netrw_dirhist_2='/Users/tomstock/Documents/Stock-IT/Projecten/iSee iKnow/isik_app/classes/validator/validators'
+let g:netrw_dirhist_1='/Users/tomstock/Documents/Stock-IT/Projecten/iSee iKnow/isik_app/classes/validator/validators/presets'
+let g:netrw_dirhist_0='/Users/tomstock/Documents/Stock-IT/Projecten/iSee iKnow/isik_app'
+let g:netrw_dirhist_9='/Users/tomstock/Documents/Stock-IT/Projecten/iSee iKnow/isik_app/classes/validator/validators/validators'
+let g:netrw_dirhist_8='/Users/tomstock/Documents/Stock-IT/Projecten/iSee iKnow/isik_app/classes/validator/validators'
+let g:netrw_dirhist_7='/Users/tomstock/Documents/Stock-IT/Projecten/iSee iKnow/isik_app/classes/validator/validators/presets'
+let g:netrw_dirhist_6='/Users/tomstock/Documents/Stock-IT/Projecten/iSee iKnow/isik_app'
+let g:netrw_dirhist_5='/Users/tomstock/Documents/Stock-IT/Projecten/iSee iKnow/isik_app/classes/validator/validators/presets'
+let g:netrw_dirhist_4='/Users/tomstock/Documents/Stock-IT/Projecten/iSee iKnow/isik_app/classes/validator/validators'

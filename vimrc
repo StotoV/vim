@@ -13,9 +13,11 @@ set number
 set ruler
 set cursorline
 set conceallevel=0
+set nospell
 
 " Set Proper Tabs
 set tabstop=4
+set softtabstop=4
 set shiftwidth=4
 set smarttab
 set expandtab
@@ -30,20 +32,17 @@ set guiheadroom=0
 set clipboard=unnamed
 
 " Some other settings
-" set nowrap
-set updatetime=1000
+set updatetime=100
 set autochdir
 set previewheight=5
-" set virtualedit=all
 set scrolloff=999
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+let mapleader=' '
 
-" Set wrapfile directory
-set bdir-=.
-set bdir+=/tmp
-set dir-=.
-set dir+=/tmp
-
-" case insensitive search YEAY
+" case insensitive search
 set ic
 " set hlsearch
 
@@ -71,6 +70,7 @@ call plug#begin('~/.vim/plugged')
 " Utility
 Plug 'christoomey/vim-tmux-navigator'                               " TMux controls integrated in VIM
 Plug 'tmux-plugins/vim-tmux-focus-events'                           " TMux focus events
+Plug 'mbbill/undotree'                                              " Undo tree
 
 " Theme / Interface
 Plug 'ajh17/Spacegray.vim'                                          " Dark color theme
@@ -78,30 +78,19 @@ Plug 'NLKNguyen/papercolor-theme'                                   " Light colo
 Plug 'itchyny/lightline.vim'                                        " Statusbar
 
 " Generic Programming Support
-Plug 'w0rp/ale'                                                     " Linter
+" Plug 'w0rp/ale'                                                     " Linter
 Plug 'romainl/vim-qf'                                               " Managing quickfix windows (for instance ale error windows)
 Plug 'tomtom/tcomment_vim'                                          " Comment whole blocks of code
-Plug 'valloric/youcompleteme'                                       " Auto completion
-Plug 'ludovicchabant/vim-gutentags'                                 " Automatically create tags file and keep it up to date
+" Plug 'ludovicchabant/vim-gutentags'                                 " Automatically create tags file and keep it up to date
+Plug 'Valloric/YouCompleteMe'
 Plug 'Yggdroot/indentLine'                                          " Indention vertical lines
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }   " Fuzzy find support, installed with brew
 Plug 'vim-vdebug/vdebug'                                            " General debugger
+Plug 'jremmen/vim-ripgrep'                                          " Fast grep though system
+Plug 'chiel92/vim-autoformat'                                       " Auto formatter
 
 " Git Support
 Plug 'airblade/vim-gitgutter'                                       " Git changes in numbers line
-
-" PHP Support
-Plug 'tobyS/pdv'                                                    " Generate PHPDocs
-Plug 'arnaud-lb/vim-php-namespace'                                  " Auto insert using statements and sort them
-
-" C# Support
-Plug 'OmniSharp/omnisharp-vim'
-
-" Typescript Support
-Plug 'leafgarland/typescript-vim'
-
-" Markdown support
-Plug 'JamshedVesuna/vim-markdown-preview'
 
 " LaTeX support
 Plug 'lervag/vimtex'
@@ -117,55 +106,66 @@ call plug#end()
 " Plugin configuration
 """""""""""""""""""""""""""""""""""""
 " STYLING "
-set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline\ Nerd\ Font\ Complete:h13
+    set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline\ Nerd\ Font\ Complete:h13
 
-" Dark
-" set background=dark
-" colorscheme spacegray
+    " Dark
+    " set background=dark
+    " colorscheme spacegray
 
-" Light
-set background=light
-colorscheme PaperColor
+    " Light
+    set background=light
+    colorscheme PaperColor
 " END STYLING "
 
 " LIGHTLINE
-let g:lightline = {
-      \ 'colorscheme': 'one',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'modified' ],
-      \             [ 'readonly', 'filename', 'modified' ] ]
-      \ }
-\ }
+    let g:lightline = {
+          \ 'colorscheme': 'one',
+          \ 'active': {
+          \   'left': [ [ 'mode', 'modified' ],
+          \             [ 'readonly', 'filename', 'modified' ] ]
+          \ }
+    \ }
 " END LIGHTLINE
+    
+" START UNDOTREE
+    nnoremap <silent><leader>u :UndotreeToggle<CR>
+" END UNDOTREE
 
+" START VIM-RIPGREP
+    nnoremap <silent><leader>gf :Rg<SPACE>
+" END VIM-RIPGREP
 
 " VDEBUG
-    let g:vdebug_options = {'debug_window_level' : 1}
+    let g:vdebug_options = {'debug_window_level' : 0}
     nmap <silent> <leader>bp :BreakpointWindow<CR>
 " END VDEBUG
 
-" START GUTENTAGS
-    set statusline+=%{gutentags#statusline()}
-" END GUTENTAGS
+" " START GUTENTAGS
+"     set statusline+=%{gutentags#statusline()}
+" " END GUTENTAGS
+
+" START AUTOFORMATTER
+    nnoremap <silent><leader>af :Autoformat<CR>
+" END AUTOFORMATTER
 
 " ALE
     " Add keystrokes for Ale
-    nmap <silent> <leader>aj :ALENext<cr>
-    nmap <silent> <leader>ak :ALEPrevious<cr>
-    nmap <silent> <leader>bd :ALEDisableBuffer<CR>
-    nmap <silent> <leader>be :ALEEnableBuffer<CR>
-    
-    let g:ale_fixers = ['remove_trailing_lines', 'trim_whitespace']
-    let g:ale_set_signs = 1
-    let g:ale_sign_column_always = 1
-    let g:ale_warn_about_trailing_whitespace = 1
-    let g:ale_sign_error = '>>'
-    let g:ale_sign_warning = '--'
-    let g:ale_lint_on_text_changed = 1
-    let g:ale_lint_on_save = 1
-    let g:ale_lint_on_enter = 1
-    let g:ale_open_list = 1
-    let g:ale_keep_list_window_open = 0
+    " nmap <silent> <leader>aj :ALENext<cr>
+    " nmap <silent> <leader>ak :ALEPrevious<cr>
+    " nmap <silent> <leader>bd :ALEDisableBuffer<CR>
+    " nmap <silent> <leader>be :ALEEnableBuffer<CR>
+    "
+    " let g:ale_fixers = ['remove_trailing_lines', 'trim_whitespace']
+    " let g:ale_set_signs = 1
+    " let g:ale_sign_column_always = 1
+    " let g:ale_warn_about_trailing_whitespace = 1
+    " let g:ale_sign_error = '>>'
+    " let g:ale_sign_warning = '--'
+    " let g:ale_lint_on_text_changed = 1
+    " let g:ale_lint_on_save = 1
+    " let g:ale_lint_on_enter = 1
+    " let g:ale_open_list = 1
+    " let g:ale_keep_list_window_open = 0
 " END ALE
 
 " VIM-QF
@@ -174,6 +174,8 @@ let g:lightline = {
 
 " YOUCOMPLETEME
     set completeopt-=preview
+    nnoremap <silent>gd :YcmCompleter GoTo<CR>
+    nnoremap <silent>gf :YcmCompleter FixIt<CR>
 " END YOUCOMPLETEME
 
 " VIM-GITGUTTER .
@@ -188,34 +190,42 @@ let g:lightline = {
     let g:gitgutter_sign_modified_removed = 'ww'
 
     " Change hunks
-    nmap ]h <Plug>(GitGutterNextHunk)
-    nmap [h <Plug>(GitGutterPrevHunk)
-    nmap [uh <Plug>(GitGutterUndoHunk)
-    nmap [lh <Plug>(GitGutterLineHighlightsToggle)
-    nmap [ht <Plug>(GitGutterToggle)
+    nnoremap ]h :GitGutterNextHunk<CR>
+    nnoremap [h :GitGutterPrevHunk<CR>
+    nnoremap <leader>uh :GitGutterUndoHunk<CR>
+    nnoremap <leader>hf :GitGutterFold<CR>
 " END VIM-GITGUTTER
 
+" START VIM-PYDOCSTRING
+    " let g:pydocstring_templates_path = '~/.vim/syntax/pydocs'
+    " nnoremap <silent><leader>ds :Pydocstring<CR>
+" END VIM-PYDOCSTRING
+
 " START VIM-TMUX-NAVIGATOR
-let g:tmux_navigator_no_mappings = 1
+    let g:tmux_navigator_no_mappings = 1
 
-nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-nnoremap <silent> <C-p> :TmuxNavigatePrevious<cr>
+    nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+    nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+    nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+    nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+    nnoremap <silent> <C-p> :TmuxNavigatePrevious<cr>
 
-let g:tmux_navigator_save_on_switch = 2
-let g:tmux_navigator_disable_when_zoomed = 1
+    let g:tmux_navigator_save_on_switch = 2
+    let g:tmux_navigator_disable_when_zoomed = 1
 " END VIM-TMUX-NAVIGATOR
 
 " START INDENTLINE
-let g:indentLine_enabled = 1
+    let g:indentLine_enabled = 1
 " END INDENTLINE
 
 " START FZF
-nnoremap <silent><leader>o :FZF<CR>
-nnoremap <silent><leader>O :FZF~<CR>
+    nnoremap <silent><leader>o :FZF<CR>
+    nnoremap <silent><leader>O :FZF~<CR>
 " END FZF
+
+" START VIMTEX
+    let g:tex_flavor = 'latex'
+" END VIMTEX
 
 """""""""""""""""""""""""""""""""""""
 " Mappings configuration

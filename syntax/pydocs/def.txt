@@ -1,0 +1,28 @@
+'''
+{{ name }}: 
+{% if params %}
+
+Args:
+{%- for p in params %}
+    {{ p.argument }}{% if p.default %} (default={{ p.default }}){% endif -%}{% if p.annotation %} ({{ p.annotation }}): {% endif -%}
+{% endfor %}
+{% endif -%}
+
+Returns:
+
+{% if yields %}
+
+Yields:
+{%- for y in yields %}
+    {{ y }}:
+{%- endfor %}
+{% endif -%}
+{% if exceptions %}
+
+Raises:
+{%- for e in exceptions %}
+    {{ e }}:
+{%- endfor %}
+{% endif -%}
+'''
+
